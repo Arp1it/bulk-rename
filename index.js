@@ -6,6 +6,7 @@ const prompt = require('prompt-sync')();
 const replaceThis = "\\barp\\b";  // \b is a word boundary marker
 const replaceWith = "arpit";
 
+const folder_name = prompt("Folder name (if you want to change current directory files name then click . and enter): ")
 const user_input = prompt("Type anything for only preview else enter only: ")
 const preview = Boolean(user_input)
 // console.log(preview, typeof(preview))
@@ -14,22 +15,22 @@ const preview = Boolean(user_input)
 // console.log(folder)
 
 try {
-    const data = fs.readdir("data", (err, data) => {
+    const data = fs.readdir(folder_name, (err, data) => {
         console.log(data);
 
         for (let index = 0; index < data.length; index++) {
             const item = data[index];
-            let newfile = `data/${item.replaceAll(new RegExp(replaceThis, 'g'), replaceWith)}`;
+            let newfile = `${folder_name}/${item.replaceAll(new RegExp(replaceThis, 'g'), replaceWith)}`;
 
             // if (!preview) {
             if (preview == false) {
-                fs.rename(`data/${item}`, newfile, () => {
+                fs.rename(`${folder_name}/${item}`, newfile, () => {
                     console.log("rename successful!")
                 });
             }
 
             else{
-                if(`data/${item}` != newfile) {console.log(`data/${item} will be renamed to ${newfile}`)};
+                if(`${folder_name}/${item}` != newfile) {console.log(`${folder_name}/${item} will be renamed to ${newfile}`)};
             };
 
         };
